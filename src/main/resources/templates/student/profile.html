@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Student Profile</title>
+  <link th:href="@{/css/student.css}" rel="stylesheet">
+</head>
+<body>
+<div class="student-profile">
+  <!-- Header -->
+  <header class="header">
+    <div class="header-left">
+      <div class="logo-container">
+        <img class="avatar" th:src="@{/images/student/avatar.png}" alt="User avatar">
+      </div>
+      <nav class="nav">
+        <a href="#" class="nav-link active">Dashboard</a>
+        <a href="#" class="nav-link">My Courses</a>
+        <a href="#" class="nav-link">Assignments</a>
+      </nav>
+    </div>
+    <div class="header-actions">
+      <button class="notification-btn">
+        <img th:src="@{/images/student/notification.svg}" alt="Notifications">
+        <span class="notification-badge"></span>
+      </button>
+      <button class="settings-btn">
+        <img th:src="@{/images/student/settings.svg}" alt="Settings">
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="main-content">
+    <!-- Profile Sidebar -->
+    <aside class="profile-sidebar">
+      <div class="profile-info">
+        <img class="profile-image" th:src="@{/images/student/profile-placeholder.png}" alt="Profile photo">
+        <h2 class="profile-name" th:text="${user.firstName + ' ' + user.lastName}"></h2>
+        <p class="profile-email" th:text="${user.email}"></p>
+      </div>
+
+      <div class="stats-container">
+        <div class="stat-item">
+          <span class="stat-value">3</span>
+          <span class="stat-label">Completed</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">2</span>
+          <span class="stat-label">In Progress</span>
+        </div>
+        <div class="stat-item">
+          <span class="stat-value">8</span>
+          <span class="stat-label">Achievements</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- Content Area -->
+    <div class="content-area">
+      <!-- Announcements Section -->
+      <section class="announcements-section">
+        <h2 class="section-title">Announcements</h2>
+        <div class="announcement-list">
+          <article class="announcement">
+            <div class="announcement-content">
+              <h3 class="announcement-title">New Course Materials Available</h3>
+              <p class="announcement-text">Updated materials for Chapter 5 have been posted</p>
+            </div>
+            <time class="announcement-time">2h ago</time>
+          </article>
+          <article class="announcement">
+            <div class="announcement-content">
+              <h3 class="announcement-title">Upcoming Test Reminder</h3>
+              <p class="announcement-text">Don't forget about the test next week</p>
+            </div>
+            <time class="announcement-time">1d ago</time>
+          </article>
+        </div>
+      </section>
+
+      <!-- Courses Section -->
+      <section class="courses-section">
+        <h2 class="section-title">Current Courses</h2>
+        <div class="course-cards">
+          <article class="course-card">
+            <img class="course-image" th:src="@{/images/student/math.png}" alt="Mathematics course">
+            <div class="course-content">
+              <h3 class="course-title">Mathematics 101</h3>
+              <p class="course-instructor">Instructor: Dr. Smith</p>
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 75%"></div>
+                </div>
+                <span class="progress-value">75%</span>
+              </div>
+              <p class="next-lesson">Next: Algebra Basics</p>
+              <button class="continue-btn">Continue</button>
+            </div>
+          </article>
+
+          <article class="course-card">
+            <img class="course-image" th:src="@{/images/student/physics.png}" alt="Physics course">
+            <div class="course-content">
+              <h3 class="course-title">Physics Fundamentals</h3>
+              <p class="course-instructor">Instructor: Prof. Brown</p>
+              <div class="progress-container">
+                <div class="progress-bar">
+                  <div class="progress-fill" style="width: 45%"></div>
+                </div>
+                <span class="progress-value">45%</span>
+              </div>
+              <p class="next-lesson">Next: Newton's Laws</p>
+              <button class="continue-btn">Continue</button>
+            </div>
+          </article>
+        </div>
+      </section>
+    </div>
+  </main>
+</div>
+</body>
+</html>

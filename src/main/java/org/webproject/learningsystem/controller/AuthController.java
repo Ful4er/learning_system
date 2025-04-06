@@ -1,14 +1,11 @@
 package org.webproject.learningsystem.controller;
 
-import org.webproject.learningsystem.model.User;
-import org.webproject.learningsystem.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
+import jakarta.servlet.http.HttpSession;
+import org.webproject.learningsystem.model.User;
+import org.webproject.learningsystem.service.UserService;
 
 @Controller
 @RequestMapping("/auth")
@@ -19,29 +16,55 @@ public class AuthController {
         this.userService = userService;
     }
 
-    @GetMapping("/login")
-    public String showLoginForm() {
-        return "login";
+    @GetMapping
+    public String showAuthForm(@RequestParam(required = false) String error,
+                               Model model) {
+        if (error != null) {
+            model.addAttribute("error", "Invalid email or password");
+        }
+        return "auth/home";
     }
 
     @PostMapping("/login")
-    public String login(@RequestParam String email,
+    public String login(@RequestParam String username,
                         @RequestParam String password,
-                        HttpSession session,
-                        Model model) {
-        User user = userService.findByEmailAndPassword(email, password);
+                        HttpSession session) {
+        User user = userService.findByEmailAndPassword(username, password);
         if (user == null) {
-            model.addAttribute("error", "Invalid credentials");
-            return "login";
+            return "redirect:/auth?error";
         }
 
         session.setAttribute("user", user);
-        return "redirect:/courses";
+        return user.getRole() == User.Role.TEACHER ? "redirect:/teacher/profile" : "redirect:/student/profile";
+    }
+
+    @PostMapping("/register")
+    public String register(@RequestParam String firstName,
+                           @RequestParam String lastName,
+                           @RequestParam String email,
+                           @RequestParam String password,
+                           @RequestParam User.Role role,
+                           HttpSession session) {
+
+        if (userService.findByEmail(email) != null) {
+            return "redirect:/auth?registerError";
+        }
+
+        User user = new User();
+        user.setFirstName(firstName);
+        user.setLastName(lastName);
+        user.setEmail(email);
+        user.setPassword(password);
+        user.setRole(role);
+
+        userService.save(user);
+        session.setAttribute("user", user);
+        return role == User.Role.TEACHER ? "redirect:/teacher/profile" : "redirect:/student/profile";
     }
 
     @GetMapping("/logout")
     public String logout(HttpSession session) {
         session.invalidate();
-        return "redirect:/auth/login";
+        return "redirect:/auth";
     }
 }
