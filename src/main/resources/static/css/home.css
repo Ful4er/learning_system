@@ -1,0 +1,49 @@
+:root {
+    --color-primary: #4f46e5;
+    --color-primary-light: #6366f1;
+    --color-background: #f8fafc;
+    --color-white: #ffffff;
+    --color-text: #1e293b;
+    --color-text-secondary: #64748b;
+    --color-border: #e2e8f0;
+    --color-error: #dc2626;
+    --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.08);
+    --shadow-button: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--color-background);
+}
+
+.auth-container {
+    min-height: 100vh;
+}
+
+.auth-card {
+    width: 100%;
+    max-width: 420px;
+    border-radius: 12px;
+    box-shadow: var(--shadow-card);
+}
+
+.toggle-button {
+    transition: all 0.3s ease;
+}
+
+.toggle-button.active {
+    box-shadow: var(--shadow-button);
+}
+
+.form-input:focus {
+    border-color: var(--color-primary-light);
+    box-shadow: 0 0 0 3px rgba(79, 70, 229, 0.1);
+}
+
+.auth-link {
+    transition: color 0.2s ease;
+}
+
+.auth-link:hover {
+    color: var(--color-primary);
+}
