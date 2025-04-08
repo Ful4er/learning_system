@@ -5,7 +5,9 @@ import org.webproject.learningsystem.model.User;
 import org.webproject.learningsystem.repository.ExamRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Service
 public class ExamService {
@@ -32,6 +34,13 @@ public class ExamService {
                 .orElseThrow(() -> new IllegalArgumentException("Exam not found"));
         exam.getStudents().add(student);
         examRepository.save(exam);
+    }
+    public int countUniqueStudentsByTeacher(User teacher) {
+        Set<User> uniqueStudents = new HashSet<>();
+        for (Exam exam : findByTeacher(teacher)) {
+            uniqueStudents.addAll(exam.getStudents());
+        }
+        return uniqueStudents.size();
     }
 
     public void recordExamResult(Long examId, User student, Integer score) {

@@ -4,116 +4,81 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Learning System</title>
-    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link th:href="@{/css/home.css}" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
+    <link th:href="@{/css/auth.css}" rel="stylesheet">
 </head>
-<body class="flex items-center justify-center auth-container">
-<div x-data="authApp()" class="w-full px-4">
-    <div class="mx-auto bg-white p-8 auth-card">
+<body>
+<div class="auth-container" id="auth-app">
+    <div class="auth-card">
         <!-- Header -->
-        <div class="text-center mb-8">
-            <h1 class="text-3xl font-bold text-gray-800 mb-2">Learning System</h1>
-            <p class="text-gray-600" x-text="isLogin ? 'Sign in to your account' : 'Create a new account'"></p>
+        <div class="auth-header">
+            <h1>Learning System</h1>
+            <p id="auth-subtitle">Sign in to your account</p>
         </div>
 
         <!-- Error Messages -->
-        <div th:if="${error}" class="bg-red-50 text-red-600 p-3 rounded-md text-sm mb-4">
+        <div th:if="${error}" class="auth-error-message">
             <span th:text="${error}"></span>
         </div>
-        <div th:if="${registerError}" class="bg-red-50 text-red-600 p-3 rounded-md text-sm mb-4">
+        <div th:if="${registerError}" class="auth-error-message">
             Email already exists
         </div>
 
-        <!-- Toggle between login and register -->
-        <div class="flex bg-gray-100 rounded-lg p-1 mb-6">
-            <button @click="isLogin = true"
-                    :class="{'bg-white text-indigo-600': isLogin, 'text-gray-600': !isLogin}"
-                    class="flex-1 py-2 px-4 rounded-md text-sm font-medium toggle-button">
-                Sign In
-            </button>
-            <button @click="isLogin = false"
-                    :class="{'bg-white text-indigo-600': !isLogin, 'text-gray-600': isLogin}"
-                    class="flex-1 py-2 px-4 rounded-md text-sm font-medium toggle-button">
-                Register
-            </button>
+        <!-- Toggle -->
+        <div class="auth-toggle">
+            <button class="auth-toggle-btn active" data-form="login">Sign In</button>
+            <button class="auth-toggle-btn" data-form="register">Register</button>
         </div>
 
         <!-- Login Form -->
-        <form x-show="isLogin"
-              th:action="@{/auth/login}"
-              method="post"
-              class="space-y-4">
-            <div>
-                <label for="login-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input type="email" id="login-email" name="username" required
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md form-input">
+        <form id="login-form" th:action="@{/auth/login}" method="post" class="auth-form">
+            <div class="auth-input-group">
+                <label for="login-email">Email</label>
+                <input type="email" id="login-email" name="username" required>
             </div>
-            <div>
-                <label for="login-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" id="login-password" name="password" required
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md form-input">
+            <div class="auth-input-group">
+                <label for="login-password">Password</label>
+                <input type="password" id="login-password" name="password" required>
             </div>
-            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md btn-primary">
-                Sign In
-            </button>
+            <button type="submit" class="auth-submit-btn">Sign In</button>
         </form>
 
         <!-- Register Form -->
-        <form x-show="!isLogin"
-              th:action="@{/auth/register}"
-              method="post"
-              class="space-y-4">
-            <div>
-                <label for="register-first-name" class="block text-sm font-medium text-gray-700 mb-1">First Name</label>
-                <input type="text" id="register-first-name" name="firstName" required
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md form-input">
+        <form id="register-form" th:action="@{/auth/register}" method="post" class="auth-form hidden">
+            <div class="auth-input-group">
+                <label for="register-first-name">First Name</label>
+                <input type="text" id="register-first-name" name="firstName" required>
             </div>
-            <div>
-                <label for="register-last-name" class="block text-sm font-medium text-gray-700 mb-1">Last Name</label>
-                <input type="text" id="register-last-name" name="lastName" required
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md form-input">
+            <div class="auth-input-group">
+                <label for="register-last-name">Last Name</label>
+                <input type="text" id="register-last-name" name="lastName" required>
             </div>
-            <div>
-                <label for="register-email" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
-                <input type="email" id="register-email" name="email" required
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md form-input">
+            <div class="auth-input-group">
+                <label for="register-email">Email</label>
+                <input type="email" id="register-email" name="email" required>
             </div>
-            <div>
-                <label for="register-password" class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                <input type="password" id="register-password" name="password" required minlength="6"
-                       class="w-full px-3 py-2 border border-gray-300 rounded-md form-input">
+            <div class="auth-input-group">
+                <label for="register-password">Password</label>
+                <input type="password" id="register-password" name="password" required minlength="6">
             </div>
-            <div>
-                <label for="register-role" class="block text-sm font-medium text-gray-700 mb-1">I am a</label>
-                <select id="register-role" name="role" required
-                        class="w-full px-3 py-2 border border-gray-300 rounded-md form-input">
+            <div class="auth-input-group">
+                <label for="register-role">I am a</label>
+                <select id="register-role" name="role" required>
                     <option value="STUDENT">Student</option>
                     <option value="TEACHER">Teacher</option>
                 </select>
             </div>
-            <button type="submit" class="w-full bg-indigo-600 text-white py-2 px-4 rounded-md btn-primary">
-                Create Account
-            </button>
+            <button type="submit" class="auth-submit-btn">Create Account</button>
         </form>
 
         <!-- Footer -->
-        <div class="mt-6 text-center text-sm text-gray-600">
-            <span x-text="isLogin ? 'Don\'t have an account?' : 'Already have an account?'"></span>
-            <a href="#" @click="isLogin = !isLogin"
-               class="font-medium text-indigo-600 hover:text-indigo-500 auth-link ml-1">
-                <span x-text="isLogin ? 'Register' : 'Sign in'"></span>
-            </a>
+        <div class="auth-footer">
+            <span id="auth-footer-text">Don't have an account?</span>
+            <a href="#" id="auth-switch-link">Register</a>
         </div>
     </div>
 </div>
-<script>
-    function authApp() {
-        return {
-            isLogin: true
-        }
-    }
-</script>
+
+<script th:src="@{/js/auth.js}"></script>
 </body>
 </html>

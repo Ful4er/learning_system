@@ -6,19 +6,35 @@ import org.springframework.web.bind.annotation.GetMapping;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.webproject.learningsystem.model.User;
+import org.webproject.learningsystem.service.ExamService;
+import org.webproject.learningsystem.service.UserService;
 
 @Controller
 @RequestMapping("/teacher")
 public class TeacherProfileController {
 
+    private final UserService userService;
+    private final ExamService examService;
+
+    public TeacherProfileController(UserService userService, ExamService examService) {
+        this.userService = userService;
+        this.examService = examService;
+    }
+
     @GetMapping("/profile")
     public String showProfile(HttpSession session, Model model) {
-        User user = (User) session.getAttribute("user");
-        if (user == null || user.getRole() != User.Role.TEACHER) {
+        User teacher = (User) session.getAttribute("user");
+        if (teacher == null || teacher.getRole() != User.Role.TEACHER) {
             return "redirect:/auth";
         }
 
-        model.addAttribute("user", user);
+        // Получаем количество экзаменов и учеников
+        int examCount = examService.findByTeacher(teacher).size();
+        int studentCount = examService.countUniqueStudentsByTeacher(teacher);
+
+        model.addAttribute("user", teacher);
+        model.addAttribute("examCount", examCount);
+        model.addAttribute("studentCount", studentCount);
         return "teacher/profile";
     }
 }

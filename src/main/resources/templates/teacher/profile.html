@@ -4,33 +4,79 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Teacher Profile</title>
-  <link th:href="@{/css/teacher.css}" rel="stylesheet">
+  <link th:href="@{/css/teacher/profile.css}" rel="stylesheet">
 </head>
 <body>
-<div class="teacher">
-  <div class="rectangle"></div>
-  <div class="rectangle2"></div>
-  <img class="image" th:src="@{/images/profile-placeholder.png}" />
-  <div class="john-smith" th:text="${user.firstName + ' ' + user.lastName}"></div>
-  <div class="john-example-com" th:text="${user.email}"></div>
-  <div class="rectangle3"></div>
-  <div class="_24">24</div>
-  <div class="students">Students</div>
-  <div class="_5">5</div>
-  <div class="courses">Courses</div>
-  <div class="rectangle4"></div>
-  <div class="recent-activity">Recent Activity</div>
-  <div class="rectangle5"></div>
-  <div class="my-courses">My Courses</div>
-  <div class="rectangle6"></div>
-  <img class="image2" th:src="@{/images/logo.png}" />
-  <div class="profile">Profile</div>
-  <div class="courses2">Courses</div>
-  <div class="my-students">My Students</div>
-  <div class="rectangle7"></div>
-  <img class="frame" th:src="@{/images/icons/notification.svg}" />
-  <div class="rectangle8"></div>
-  <img class="image3" th:src="@{/images/icons/avatar.svg}" />
-</div>
+  <nav class="nav-bar">
+    <div class="container">
+      <div class="nav-content">
+        <ul class="nav-links" role="menubar">
+          <li role="none">
+            <a href="#profile" class="nav-link active" role="menuitem">Profile</a>
+          </li>
+          <li role="none">
+            <a href="#exams" class="nav-link" role="menuitem">Exams</a>
+          </li>
+          <li role="none">
+            <a href="#students" class="nav-link" role="menuitem">My Students</a>
+          </li>
+        </ul>
+        <button class="notification-btn" aria-label="Notifications">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M12.5 14.1667H16.6667L15.4959 12.9958C15.3386 12.8386 15.2139 12.6519 15.1289 12.4464C15.0438 12.2409 15 12.0207 15 11.7983V9.16667C15.0002 8.13245 14.6797 7.12362 14.0827 6.27907C13.4858 5.43453 12.6417 4.7958 11.6667 4.45083V4.16667C11.6667 3.72464 11.4911 3.30072 11.1786 2.98816C10.866 2.67559 10.4421 2.5 10 2.5C9.55801 2.5 9.13409 2.67559 8.82153 2.98816C8.50897 3.30072 8.33337 3.72464 8.33337 4.16667V4.45083C6.39171 5.1375 5.00004 6.99 5.00004 9.16667V11.7992C5.00004 12.2475 4.82171 12.6783 4.50421 12.9958L3.33337 14.1667H7.50004M12.5 14.1667V15C12.5 15.663 12.2366 16.2989 11.7678 16.7678C11.299 17.2366 10.6631 17.5 10 17.5C9.337 17.5 8.70111 17.2366 8.23227 16.7678C7.76343 16.2989 7.50004 15.663 7.50004 15V14.1667M12.5 14.1667H7.50004" stroke="#3870EC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <main class="main-content">
+    <div class="container">
+      <div class="dashboard-layout">
+        <section class="profile-card" aria-label="User Profile">
+          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/7fd18b240e877daf5ca15bfd7cc261f021ac19d2" alt="profile picture" class="profile-image"/>
+          <h1 class="profile-name" th:text="${user.firstName + ' ' + user.lastName}"></h1>
+          <p class="profile-email" th:text="${user.email}"></p>
+          <div class="stats-section">
+            <div class="stats-grid">
+              <div class="stat-item">
+                <p class="stat-number" th:text="${studentCount}">0</p>
+                <p class="stat-label">Students</p>
+              </div>
+              <div class="stat-item">
+                <p class="stat-number" th:text="${examCount}">0</p>
+                <p class="stat-label">Exams</p>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="action-cards">
+          <div class="action-card">
+            <h2 class="card-title">My students</h2>
+            <button class="add-button" aria-label="Add new student">
+              <svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20.5251" cy="20" r="20" fill="#F6F5F5" />
+                <line y1="-1" x2="20" y2="-1" transform="matrix(0 1 1 0 21.5253 10)" stroke="#2563EB" stroke-opacity="0.7" stroke-width="2"/>
+                <line x1="10.5253" y1="20" x2="30.5253" y2="20" stroke="#2563EB" stroke-opacity="0.7" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+
+          <div class="action-card">
+            <h2 class="card-title">My exams</h2>
+            <button class="add-button" aria-label="Add new exam">
+              <svg width="41" height="40" viewBox="0 0 41 40" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="20.709" cy="20" r="20" fill="#F6F5F5" />
+                <line y1="-1" x2="20" y2="-1" transform="matrix(0 1 1 0 21.7091 10)" stroke="#2563EB" stroke-opacity="0.7" stroke-width="2"/>
+                <line x1="10.7091" y1="20" x2="30.7091" y2="20" stroke="#2563EB" stroke-opacity="0.7" stroke-width="2"/>
+              </svg>
+            </button>
+          </div>
+        </section>
+      </div>
+    </div>
+  </main>
 </body>
 </html>
+
