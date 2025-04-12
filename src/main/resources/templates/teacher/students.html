@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Students</title>
+  <link th:href="@{/css/teacher/students.css}" rel="stylesheet">
+</head>
+<body>
+<nav class="nav-bar">
+  <div class="container">
+    <div class="nav-content">
+      <ul class="nav-links" role="menubar">
+        <li role="none">
+          <a th:href="@{/teacher/profile}" class="nav-link" role="menuitem">Profile</a>
+        </li>
+        <li role="none">
+          <a th:href="@{/teacher/exams}" class="nav-link" role="menuitem">Exams</a>
+        </li>
+        <li role="none">
+          <a th:href="@{/teacher/students}" class="nav-link active" role="menuitem">My Students</a>
+        </li>
+      </ul>
+      <button class="notification-btn" aria-label="Notifications">
+        <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <path d="M12.5 14.1667H16.6667L15.4959 12.9958C15.3386 12.8386 15.2139 12.6519 15.1289 12.4464C15.0438 12.2409 15 12.0207 15 11.7983V9.16667C15.0002 8.13245 14.6797 7.12362 14.0827 6.27907C13.4858 5.43453 12.6417 4.7958 11.6667 4.45083V4.16667C11.6667 3.72464 11.4911 3.30072 11.1786 2.98816C10.866 2.67559 10.4421 2.5 10 2.5C9.55801 2.5 9.13409 2.67559 8.82153 2.98816C8.50897 3.30072 8.33337 3.72464 8.33337 4.16667V4.45083C6.39171 5.1375 5.00004 6.99 5.00004 9.16667V11.7992C5.00004 12.2475 4.82171 12.6783 4.50421 12.9958L3.33337 14.1667H7.50004M12.5 14.1667V15C12.5 15.663 12.2366 16.2989 11.7678 16.7678C11.299 17.2366 10.6631 17.5 10 17.5C9.337 17.5 8.70111 17.2366 8.23227 16.7678C7.76343 16.2989 7.50004 15.663 7.50004 15V14.1667M12.5 14.1667H7.50004" stroke="#3870EC" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path>
+        </svg>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<main class="main-content">
+  <div class="container">
+    <div class="dashboard-layout">
+      <div class="header-section">
+        <h2 class="card-title">My Students</h2>
+      </div>
+
+      <div class="students-grid">
+        <!-- Student cards -->
+        <div class="student-card" th:each="student : ${students}" th:onclick="|showStudentDetails(${student.id})|">
+          <div class="student-avatar">
+            <span th:text="${student.firstName.substring(0,1) + student.lastName.substring(0,1)}"></span>
+          </div>
+          <div class="student-info">
+            <h3 th:text="${student.firstName + ' ' + student.lastName}"></h3>
+            <p th:text="${student.email}"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!-- Student Details Modal -->
+<div id="studentModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close" onclick="closeStudentModal()">&times;</span>
+    <div id="studentDetailsContent">
+      <!-- Content will be loaded here via AJAX -->
+    </div>
+  </div>
+</div>
+
+<script>
+  function showStudentDetails(studentId) {
+    fetch('/teacher/students/' + studentId)
+            .then(response => response.text())
+            .then(html => {
+              document.getElementById('studentDetailsContent').innerHTML = html;
+              document.getElementById('studentModal').style.display = 'block';
+            });
+  }
+
+  function closeStudentModal() {
+    document.getElementById('studentModal').style.display = 'none';
+  }
+
+  window.onclick = function(event) {
+    if (event.target === document.getElementById('studentModal')) {
+      closeStudentModal();
+    }
+  }
+</script>
+</body>
+</html>

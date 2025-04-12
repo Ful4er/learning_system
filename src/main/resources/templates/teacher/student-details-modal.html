@@ -1,0 +1,52 @@
+<div class="student-details">
+  <div class="student-header">
+    <div class="student-avatar large">
+      <span th:text="${student.firstName.substring(0,1) + student.lastName.substring(0,1)}"></span>
+    </div>
+    <h2 th:text="${student.firstName + ' ' + student.lastName}"></h2>
+    <p class="student-email" th:text="${student.email}"></p>
+  </div>
+
+  <div class="student-info-section">
+    <h3>Personal Information</h3>
+    <div class="info-grid">
+      <div class="info-item">
+        <span class="info-label">First Name:</span>
+        <span class="info-value" th:text="${student.firstName}"></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Last Name:</span>
+        <span class="info-value" th:text="${student.lastName}"></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Email:</span>
+        <span class="info-value" th:text="${student.email}"></span>
+      </div>
+      <div class="info-item">
+        <span class="info-label">Account Created:</span>
+        <span class="info-value"
+              th:text="${student.createdAt != null} ?
+                   ${#temporals.format(student.createdAt, 'dd MMM yyyy')} :
+                   'N/A'"></span>
+      </div>
+    </div>
+  </div>
+
+  <div class="student-exams-section" th:if="${not exams.isEmpty()}">
+    <h3>Enrolled Exams</h3>
+    <div class="exams-list">
+      <div class="exam-item" th:each="exam : ${exams}">
+        <div class="exam-title" th:text="${exam.title}"></div>
+        <div class="exam-info">
+          <span th:text="${exam.description != null ? exam.description : 'No description'}"></span>
+          <span th:if="${exam.createdAt != null}"
+                th:text="|Created: ${#temporals.format(exam.createdAt, 'dd MMM yyyy')}|"></span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="no-exams" th:if="${exams.isEmpty()}">
+    <p>This student is not enrolled in any of your exams yet.</p>
+  </div>
+</div>

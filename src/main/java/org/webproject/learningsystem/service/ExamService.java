@@ -43,4 +43,10 @@ public class ExamService {
                 .map(exam -> exam.getStudents().size())
                 .orElse(0);
     }
+    public int countExamsForStudent(User student) {
+        return examRepository.findByStudentsContaining(student).size();
+    }
+    public List<Exam> findByTeacherWithStudents(User teacher) {
+        return examRepository.findByTeacher(teacher);
+    }
 }
