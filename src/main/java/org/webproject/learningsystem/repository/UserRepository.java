@@ -1,5 +1,4 @@
 package org.webproject.learningsystem.repository;
-
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.webproject.learningsystem.model.User;
 import org.webproject.learningsystem.model.User.Role;

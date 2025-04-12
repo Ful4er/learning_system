@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Controller
-@RequestMapping("/exams")
+@RequestMapping("/teacher/exams")
 public class ExamController {
     private final ExamService examService;
     private final UserService userService;
@@ -32,42 +32,27 @@ public class ExamController {
         if (user.getRole() == User.Role.TEACHER) {
             model.addAttribute("exams", examService.findByTeacher(user));
             model.addAttribute("isTeacher", true);
+            model.addAttribute("newExam", new Exam()); // Добавляем для формы создания
         } else {
-            model.addAttribute("exams", examService.findByStudent(user));
-            model.addAttribute("isTeacher", false);
-
-            User teacher = userService.findTeacher();
-            if (teacher != null) {
-                List<Exam> allExams = examService.findByTeacher(teacher);
-                allExams.removeAll(examService.findByStudent(user));
-                model.addAttribute("availableExams", allExams);
-            }
+            // Редирект для студентов, если они попали сюда
+            return "redirect:/student/exams";
         }
 
         model.addAttribute("user", user);
-        return "exams";
+        return "teacher/exams";
     }
 
     @PostMapping
-    public String createExam(@RequestParam String title,
-                             @RequestParam String description,
-                             @RequestParam Integer duration,
-                             @RequestParam Integer passingScore,
+    public String createExam(@ModelAttribute Exam newExam,
                              HttpSession session) {
         User teacher = (User) session.getAttribute("user");
         if (teacher == null || teacher.getRole() != User.Role.TEACHER) {
             return "redirect:/auth/login";
         }
 
-        Exam exam = new Exam();
-        exam.setTitle(title);
-        exam.setDescription(description);
-        exam.setTeacher(teacher);
-        exam.setDurationMinutes(duration);
-        exam.setPassingScore(passingScore);
-        examService.save(exam);
-
-        return "redirect:/exams";
+        newExam.setTeacher(teacher);
+        examService.save(newExam);
+        return "redirect:/teacher/exams";
     }
 
     @PostMapping("/{examId}/enroll")
@@ -79,7 +64,7 @@ public class ExamController {
         }
 
         examService.enrollStudent(examId, student);
-        return "redirect:/exams";
+        return "redirect:/student/exams";
     }
 
     @PostMapping("/{examId}/complete")
@@ -92,6 +77,6 @@ public class ExamController {
         }
 
         examService.recordExamResult(examId, student, score);
-        return "redirect:/exams";
+        return "redirect:/student/exams";
     }
 }

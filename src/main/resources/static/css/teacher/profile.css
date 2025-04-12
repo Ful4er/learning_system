@@ -36,16 +36,16 @@ body {
 .nav-content {
   height: 100%;
   display: flex;
-  align-items: center;
+  align-items: end;
   justify-content: space-between;
 }
 
 .nav-links {
   display: flex;
-  gap: 12px;
+  gap: 24px;
   list-style: none;
   padding: 0;
-  margin: 0;
+  margin-bottom: 5px;
 }
 
 .nav-link {
@@ -53,6 +53,7 @@ body {
   font-weight: 500;
   text-decoration: none;
   color: var(--text-gray);
+  padding: 8px 0;
 }
 
 .nav-link.active {
@@ -60,6 +61,7 @@ body {
 }
 
 .notification-btn {
+  margin-top: 20px;
   width: 40px;
   height: 40px;
   border-radius: 50%;
@@ -73,9 +75,7 @@ body {
 
 /* Main content styles */
 .main-content {
-  padding-top: 40px;
-  padding-bottom: 40px;
-  margin-bottom: 200px;
+  padding: 40px 0;
 }
 
 .dashboard-layout {
