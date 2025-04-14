@@ -34,7 +34,8 @@
     <div class="container">
       <div class="dashboard-layout">
         <section class="profile-card" aria-label="User Profile">
-          <img src="https://cdn.builder.io/api/v1/image/assets/TEMP/7fd18b240e877daf5ca15bfd7cc261f021ac19d2" alt="profile picture" class="profile-image"/>
+          <span class="profile-image"
+                th:text="${user.firstName.substring(0,1) + ' ' + user.lastName.substring(0,1)}"></span>
           <h1 class="profile-name" th:text="${user.firstName + ' ' + user.lastName}"></h1>
           <p class="profile-email" th:text="${user.email}"></p>
           <div class="stats-section">

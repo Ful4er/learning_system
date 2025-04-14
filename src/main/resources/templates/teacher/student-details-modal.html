@@ -24,10 +24,7 @@
       </div>
       <div class="info-item">
         <span class="info-label">Account Created:</span>
-        <span class="info-value"
-              th:text="${student.createdAt != null} ?
-                   ${#temporals.format(student.createdAt, 'dd MMM yyyy')} :
-                   'N/A'"></span>
+        <span class="info-value" th:text="${student.createdAt}"></span>
       </div>
     </div>
   </div>
@@ -39,8 +36,7 @@
         <div class="exam-title" th:text="${exam.title}"></div>
         <div class="exam-info">
           <span th:text="${exam.description != null ? exam.description : 'No description'}"></span>
-          <span th:if="${exam.createdAt != null}"
-                th:text="|Created: ${#temporals.format(exam.createdAt, 'dd MMM yyyy')}|"></span>
+          <span th:text="${exam.createdAt}"></span>
         </div>
       </div>
     </div>

@@ -98,8 +98,18 @@ body {
 .profile-image {
   width: 141px;
   height: 141px;
-  border-radius: 50%;
   margin-bottom: 9px;
+  border-radius: 50%;
+  background-color: var(--primary-blue);
+  color: white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: bold;
+  font-size: 48px; /* Увеличим размер шрифта для лучшей видимости */
+  flex-shrink: 0;
+  text-transform: uppercase; /* Все буквы будут заглавными */
+  line-height: 1; /* Убираем лишний межстрочный интервал */
 }
 
 .profile-name {
