@@ -9,38 +9,38 @@ import java.util.HashSet;
 import java.util.Set;
 
 @Entity
-@Table(name = "exams")
-@Data
-@NoArgsConstructor
+@Table(name = "exams") // Таблица в базе данных для экзаменов.
+@Data // Генерирует геттеры, сеттеры, equals, hashCode и toString методы [[1]].
+@NoArgsConstructor // Генерирует конструктор без параметров [[2]].
 public class Exam {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // Автоматическая генерация ID.
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false) // Поле не может быть null.
     private String title;
 
-    private String description;
+    private String description; // Описание экзамена.
 
-    @ManyToOne
-    @JoinColumn(name = "teacher_id", nullable = false)
+    @ManyToOne // Связь многие-к-одному: один учитель может создать много экзаменов.
+    @JoinColumn(name = "teacher_id", nullable = false) // Внешний ключ на таблицу пользователей.
     private User teacher;
 
-    @ManyToMany
+    @ManyToMany // Связь многие-ко-многим: один экзамен может быть связан с множеством студентов.
     @JoinTable(
-            name = "exam_students",
-            joinColumns = @JoinColumn(name = "exam_id"),
-            inverseJoinColumns = @JoinColumn(name = "student_id")
+            name = "exam_students", // Промежуточная таблица для связи экзаменов и студентов.
+            joinColumns = @JoinColumn(name = "exam_id"), // Столбец для ID экзамена.
+            inverseJoinColumns = @JoinColumn(name = "student_id") // Столбец для ID студента.
     )
-    private Set<User> students = new HashSet<>();
+    private Set<User> students = new HashSet<>(); // Множество студентов, записанных на экзамен.
 
     @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdAt = new Date();
+    @Temporal(TemporalType.TIMESTAMP) // Хранение даты и времени создания экзамена.
+    private Date createdAt = new Date(); // Устанавливается автоматически при создании объекта.
 
     @Column(name = "duration_minutes")
-    private Integer durationMinutes;
+    private Integer durationMinutes; // Длительность экзамена в минутах.
 
     @Column(name = "passing_score")
-    private Integer passingScore;
+    private Integer passingScore; // Минимальный проходной балл.
 }

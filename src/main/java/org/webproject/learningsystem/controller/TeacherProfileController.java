@@ -10,31 +10,27 @@ import org.webproject.learningsystem.service.ExamService;
 import org.webproject.learningsystem.service.UserService;
 
 @Controller
-@RequestMapping("/teacher")
+@RequestMapping("/teacher") // Базовый URL для профиля преподавателя.
 public class TeacherProfileController {
-
-    private final UserService userService;
     private final ExamService examService;
 
     public TeacherProfileController(UserService userService, ExamService examService) {
-        this.userService = userService;
         this.examService = examService;
     }
 
-    @GetMapping("/profile")
+    @GetMapping("/profile") // Отображает профиль преподавателя.
     public String showProfile(HttpSession session, Model model) {
         User teacher = (User) session.getAttribute("user");
         if (teacher == null || teacher.getRole() != User.Role.TEACHER) {
-            return "redirect:/auth";
+            return "redirect:/auth"; // Перенаправляем на авторизацию, если пользователь не преподаватель.
         }
 
-        // Получаем количество экзаменов и учеников
-        int examCount = examService.findByTeacher(teacher).size();
-        int studentCount = examService.countUniqueStudentsByTeacher(teacher);
+        int examCount = examService.findByTeacher(teacher).size(); // Количество экзаменов преподавателя.
+        int studentCount = examService.countUniqueStudentsByTeacher(teacher); // Количество уникальных студентов.
 
         model.addAttribute("user", teacher);
-        model.addAttribute("examCount", examCount);
+        model.addAttribute("examCount", examCount); // Добавляем статистику в модель.
         model.addAttribute("studentCount", studentCount);
-        return "teacher/profile";
+        return "teacher/profile"; // Возвращает представление профиля преподавателя.
     }
 }

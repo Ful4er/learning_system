@@ -106,10 +106,8 @@ body {
   align-items: center;
   justify-content: center;
   font-weight: bold;
-  font-size: 48px; /* Увеличим размер шрифта для лучшей видимости */
-  flex-shrink: 0;
-  text-transform: uppercase; /* Все буквы будут заглавными */
-  line-height: 1; /* Убираем лишний межстрочный интервал */
+  font-size: 48px;
+  text-transform: uppercase;
 }
 
 .profile-name {

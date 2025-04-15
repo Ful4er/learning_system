@@ -29,20 +29,37 @@
     </div>
   </div>
 
-  <div class="student-exams-section" th:if="${not exams.isEmpty()}">
-    <h3>Enrolled Exams</h3>
-    <div class="exams-list">
-      <div class="exam-item" th:each="exam : ${exams}">
-        <div class="exam-title" th:text="${exam.title}"></div>
-        <div class="exam-info">
-          <span th:text="${exam.description != null ? exam.description : 'No description'}"></span>
-          <span th:text="${exam.createdAt}"></span>
-        </div>
-      </div>
-    </div>
+  <div class="student-exams-section" th:if="${not examResults.isEmpty()}">
+    <h3>Exam Results</h3>
+    <table class="table">
+      <thead>
+      <tr>
+        <th>Exam Title</th>
+        <th>Enrolled At</th>
+        <th>Completed At</th>
+        <th>Score</th>
+      </tr>
+      </thead>
+      <tbody>
+      <tr th:each="result : ${examResults}">
+        <td th:text="${result.exam.title}"></td>
+        <td th:text="${#temporals.format(result.enrolledAt, 'dd.MM.yyyy HH:mm')}"></td>
+        <td>
+                    <span th:if="${result.completedAt != null}"
+                          th:text="${#temporals.format(result.completedAt, 'dd.MM.yyyy HH:mm')}">
+                    </span>
+          <span th:unless="${result.completedAt != null}">Not completed</span>
+        </td>
+        <td>
+          <span th:if="${result.score != null}" th:text="${result.score}"></span>
+          <span th:unless="${result.score != null}">-</span>
+        </td>
+      </tr>
+      </tbody>
+    </table>
   </div>
 
-  <div class="no-exams" th:if="${exams.isEmpty()}">
+  <div class="no-exams" th:if="${examResults.isEmpty()}">
     <p>This student is not enrolled in any of your exams yet.</p>
   </div>
 </div>

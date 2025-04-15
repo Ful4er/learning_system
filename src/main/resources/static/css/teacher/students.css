@@ -275,3 +275,136 @@ body {
         width: 80%;
     }
 }
+/*Для таблицы*/
+.student-details {
+    padding: 20px;
+}
+
+/* Header section */
+.student-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.student-avatar.large {
+    width: 80px;
+    height: 80px;
+    font-size: 32px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background-color: var(--primary-blue);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+}
+
+.student-email {
+    color: #666;
+    margin-top: 5px;
+}
+
+/* Personal Information Section */
+.student-info-section h3,
+.student-exams-section h3 {
+    border-bottom: 1px solid #eee;
+    padding-bottom: 10px;
+    margin-bottom: 15px;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info-label {
+    font-weight: bold;
+    color: #555;
+    min-width: 150px;
+}
+
+.info-value {
+    flex-grow: 1;
+}
+
+/* Exam Results Section */
+.student-exams-section {
+    margin-top: 20px;
+}
+
+.table {
+    width: 100%;
+    border-collapse: separate;
+    border-spacing: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.table th,
+.table td {
+    padding: 12px 20px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+.table th {
+    background-color: #f8f9fa;
+    font-weight: bold;
+    color: var(--text-dark);
+}
+
+.table tr:hover {
+    background-color: #f6f6f6;
+    cursor: pointer;
+}
+
+.table tr:last-child td {
+    border-bottom: none;
+}
+
+.exam-status {
+    font-weight: 500;
+    color: var(--text-gray);
+}
+
+.exam-status.completed {
+    color: #16a34a;
+}
+
+.exam-score {
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+.no-exams {
+    background: var(--light-blue);
+    border-radius: 12px;
+    padding: 40px;
+    text-align: center;
+    color: var(--text-gray);
+}
+
+@media (max-width: 768px) {
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .table {
+        display: block;
+        overflow-x: auto;
+    }
+
+    .table th,
+    .table td {
+        white-space: nowrap;
+    }
+}
