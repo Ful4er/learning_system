@@ -1,5 +1,6 @@
 package org.webproject.learningsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.Data;
 import java.util.Date;
@@ -7,6 +8,7 @@ import java.util.Date;
 @Entity
 @Table(name = "users") // Таблица для пользователей системы.
 @Data // Генерирует геттеры, сеттеры, equals, hashCode и toString методы [[1]].
+@JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY) // Автоматическая генерация ID.

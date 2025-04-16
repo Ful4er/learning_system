@@ -9,6 +9,7 @@
     --white: #FFFFFF;
 }
 
+/* Base styles */
 body {
     margin: 0;
     font-family: 'Inter', sans-serif;
@@ -24,7 +25,7 @@ body {
     padding-right: 24px;
 }
 
-/* Navigation styles */
+/* Navigation */
 .nav-bar {
     width: 100%;
     height: 70px;
@@ -72,6 +73,7 @@ body {
     cursor: pointer;
 }
 
+/* Main content */
 .main-content {
     padding: 40px 0;
 }
@@ -107,6 +109,7 @@ body {
     cursor: pointer;
 }
 
+/* Exam cards */
 .exams-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
@@ -141,25 +144,28 @@ body {
     font-size: 14px;
     margin: 0;
 }
-/* Стили для модального окна */
+
+/* Modal windows */
 .modal {
     display: none;
     position: fixed;
-    z-index: 1;
+    z-index: 1000;
     left: 0;
     top: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.5);
 }
 
 .modal-content {
-    background-color: #fefefe;
-    margin: 15% auto;
-    padding: 20px;
-    border: 1px solid #888;
-    width: 50%;
-    border-radius: 8px;
+    background-color: var(--white);
+    margin: 5% auto;
+    padding: 30px;
+    border-radius: 12px;
+    width: 70%;
+    max-height: 80vh;
+    overflow-y: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
 }
 
 .close {
@@ -174,37 +180,277 @@ body {
     color: black;
 }
 
+/* Exam details modal */
+.exam-details {
+    padding: 20px;
+}
+
+.exam-header {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.exam-icon.large {
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    background-color: var(--light-blue);
+    color: var(--primary-blue);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.exam-icon.large svg {
+    width: 40px;
+    height: 40px;
+}
+
+.exam-description {
+    color: var(--text-gray);
+    max-width: 600px;
+    margin: 10px auto 0;
+    line-height: 1.5;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+    margin-top: 20px;
+}
+
+.info-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.info-label {
+    font-weight: bold;
+    color: var(--text-dark);
+    min-width: 150px;
+}
+
+.info-value {
+    color: var(--text-gray);
+    text-align: right;
+}
+
+/* Students list */
+.students-list {
+    margin-top: 20px;
+}
+
+.student-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 12px;
+}
+
+.student-avatar.small {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    background-color: var(--primary-blue);
+    color: var(--white);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    font-size: 14px;
+    margin-right: 10px;
+}
+
+.student-info {
+    display: flex;
+    flex-direction: row;
+}
+
+.student-name {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+.student-email {
+    font-size: 12px;
+    color: var(--text-gray);
+}
+
+.student-results {
+    margin-top: 8px;
+    font-size: 13px;
+    color: var(--text-gray);
+}
+
+.student-results div {
+    margin-bottom: 4px;
+}
+
+/* Status badges */
+.status {
+    padding: 2px 6px;
+    border-radius: 4px;
+    font-size: 12px;
+    font-weight: 500;
+}
+
+.status.completed {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+.status.pending {
+    background-color: #fef3c7;
+    color: #d97706;
+}
+
+.student-score {
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+/* Results table */
+.results-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 15px;
+}
+
+.results-table th,
+.results-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.results-table th {
+    background-color: var(--light-gray);
+    font-weight: 600;
+    color: var(--text-dark);
+}
+
+.results-table tr:hover {
+    background-color: var(--light-blue);
+}
+#examModal .modal-content {
+    background-color: var(--white);
+    margin: 2% auto;
+    padding: 25px;
+    border-radius: 12px;
+    width: 50%;
+    max-width: 500px;
+    box-shadow: 0 4px 24px rgba(0, 0, 0, 0.15);
+    position: relative;
+}
+
+/* Форма в модальном окне */
+#examModal form {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+/* Form styles */
 .form-group {
-    margin-bottom: 15px;
+    margin-bottom: 20px;
 }
 
 .form-group label {
     display: block;
-    margin-bottom: 5px;
+    margin-bottom: 6px;
+    font-weight: 500;
+    color: var(--text-dark);
+    font-size: 14px;
 }
 
-.form-group input,
+.form-group input[type="text"],
+.form-group input[type="number"],
 .form-group textarea {
     width: 100%;
-    padding: 8px;
-    border: 1px solid #ddd;
-    border-radius: 4px;
+    padding: 10px 12px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    font-size: 14px;
+    transition: all 0.2s ease;
+    box-sizing: border-box;
+}
+
+.form-group textarea {
+    min-height: 100px;
+    resize: vertical;
+    line-height: 1.5;
+    padding: 12px;
+}
+
+.form-group input:focus,
+.form-group textarea:focus {
+    outline: none;
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 2px rgba(37, 99, 235, 0.1);
 }
 
 .submit-btn {
-    background-color: #2563EB;
+    background-color: var(--primary-blue);
     color: white;
-    padding: 10px 15px;
     border: none;
-    border-radius: 4px;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 14px;
+    font-weight: 500;
     cursor: pointer;
+    transition: background-color 0.2s;
+    margin-top: 8px;
 }
 
 .submit-btn:hover {
-    background-color: #1D4ED8;
+    background-color: var(--secondary-blue);
 }
+
+/* Responsive styles */
 @media (max-width: 768px) {
     .exams-grid {
         grid-template-columns: 1fr;
+    }
+
+    .modal-content {
+        width: 90%;
+        margin: 20px auto;
+        padding: 20px;
+    }
+
+    .info-grid {
+        grid-template-columns: 1fr;
+    }
+    #examModal .modal-content {
+        width: 80%;
+        margin: 5% auto;
+        padding: 20px;
+    }
+}
+
+@media (max-width: 576px) {
+    .modal-content {
+        width: 95%;
+        padding: 15px;
+    }
+
+    .nav-links {
+        gap: 15px;
+    }
+
+    .nav-link {
+        font-size: 16px;
+    }
+    #examModal .modal-content {
+        width: 90%;
+        padding: 16px;
+    }
+
+    .form-group textarea {
+        min-height: 80px;
     }
 }

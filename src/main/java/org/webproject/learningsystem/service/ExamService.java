@@ -9,6 +9,7 @@ import org.webproject.learningsystem.repository.ExamStudentRepository;
 
 import java.util.HashSet;
 import java.util.List;
+import java.util.Optional;
 import java.util.Set;
 
 @Service // Аннотация указывает, что это сервисный компонент Spring [[1]].
@@ -78,5 +79,9 @@ public class ExamService {
     // Метод для получения результатов экзаменов конкретного студента.
     public List<ExamStudent> getExamResultsForStudent(User student) {
         return examStudentRepository.findByStudent(student);
+    }
+
+    public Optional<Exam> findById(Long examId) {
+        return examRepository.findById(examId);
     }
 }

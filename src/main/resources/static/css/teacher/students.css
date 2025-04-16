@@ -174,12 +174,14 @@ body {
 }
 
 .modal-content {
-    background-color: #fefefe;
+    background-color: var(--white);
     margin: 15% auto;
     padding: 20px;
     border: 1px solid #888;
     width: 50%;
-    border-radius: 8px;
+    border-radius: 12px;
+    overflow-y: auto;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.15);
 }
 
 .close {
@@ -363,7 +365,7 @@ body {
 }
 
 .table tr:hover {
-    background-color: #f6f6f6;
+    background-color: var(--light-blue);
     cursor: pointer;
 }
 
