@@ -31,6 +31,9 @@ body {
     height: 70px;
     background-color: var(--white);
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+    position: sticky;
+    top: 0;
+    z-index: 100;
 }
 
 .nav-content {
@@ -53,13 +56,13 @@ body {
     font-weight: 500;
     text-decoration: none;
     color: var(--text-gray);
-    padding: 8px 0;
+    padding: 8px 0px;
+    transition: color 0.2s ease;
 }
 
 .nav-link.active {
     color: var(--primary-blue);
 }
-
 .notification-btn {
     margin-top: 20px;
     width: 40px;
@@ -71,8 +74,11 @@ body {
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition: background-color 0.2s ease;
 }
-
+.notification-btn:hover {
+    background-color: #e0e0e0;
+}
 /* Main content */
 .main-content {
     padding: 40px 0;
@@ -440,10 +446,6 @@ body {
 
     .nav-links {
         gap: 15px;
-    }
-
-    .nav-link {
-        font-size: 16px;
     }
     #examModal .modal-content {
         width: 90%;
