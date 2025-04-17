@@ -6,7 +6,6 @@ import org.webproject.learningsystem.model.ExamStudent;
 import org.webproject.learningsystem.model.User;
 import org.webproject.learningsystem.repository.ExamStudentRepository;
 import org.webproject.learningsystem.service.ExamService;
-import org.webproject.learningsystem.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;

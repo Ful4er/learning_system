@@ -3,7 +3,6 @@ package org.webproject.learningsystem.dto;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.Data;
 import org.webproject.learningsystem.model.Exam;
-import org.webproject.learningsystem.model.ExamStudent;
 
 import java.util.List;
 

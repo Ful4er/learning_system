@@ -23,7 +23,7 @@ public class AuthController {
         if (error != null) {
             model.addAttribute("error", "Invalid email or password");
         }
-        return "auth/home"; // Возвращает имя представления Thymeleaf.
+        return "auth"; // Возвращает имя представления Thymeleaf.
     }
 
     @PostMapping("/login") // Обрабатывает POST-запросы на "/auth/login".
