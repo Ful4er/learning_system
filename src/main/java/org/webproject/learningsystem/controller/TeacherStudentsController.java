@@ -1,6 +1,5 @@
 package org.webproject.learningsystem.controller;
 
-import org.webproject.learningsystem.model.Exam;
 import org.webproject.learningsystem.model.ExamStudent;
 import org.webproject.learningsystem.model.User;
 import org.webproject.learningsystem.service.ExamService;
@@ -16,7 +15,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Controller
-@RequestMapping("/teacher/students") // Базовый URL для управления студентами преподавателя.
+@RequestMapping("/teacher/students")
 public class TeacherStudentsController {
     private final ExamService examService;
     private final UserService userService;
@@ -26,41 +25,40 @@ public class TeacherStudentsController {
         this.userService = userService;
     }
 
-    @GetMapping // Отображает список студентов преподавателя.
+    @GetMapping
     public String listStudents(HttpSession session, Model model) {
         User teacher = (User) session.getAttribute("user");
         if (teacher == null || teacher.getRole() != User.Role.TEACHER) {
-            return "redirect:/auth"; // Перенаправляем на авторизацию, если пользователь не преподаватель.
+            return "redirect:/auth";
         }
 
         Set<User> students = examService.findByTeacher(teacher).stream()
-                .flatMap(exam -> exam.getStudents().stream()) // Получаем всех уникальных студентов из экзаменов.
+                .flatMap(exam -> exam.getStudents().stream())
                 .collect(Collectors.toSet());
 
-        model.addAttribute("students", students); // Добавляем студентов в модель.
+        model.addAttribute("students", students);
         model.addAttribute("user", teacher);
-        return "teacher/students"; // Возвращает представление списка студентов.
+        return "teacher/students";
     }
 
-    @GetMapping("/{studentId}") // Отображает детали студента.
+    @GetMapping("/{studentId}")
     public String getStudentDetails(@PathVariable Long studentId,
                                     HttpSession session,
                                     Model model) {
         User teacher = (User) session.getAttribute("user");
         if (teacher == null || teacher.getRole() != User.Role.TEACHER) {
-            return "redirect:/auth"; // Проверка прав доступа.
+            return "redirect:/auth";
         }
 
-        User student = userService.findById(studentId); // Находим студента по ID.
+        User student = userService.findById(studentId);
         if (student == null || student.getRole() != User.Role.STUDENT) {
-            return "redirect:/teacher/students"; // Перенаправляем, если студент не найден.
+            return "redirect:/teacher/students";
         }
 
-        List<Exam> teacherExams = examService.findByTeacherWithStudents(teacher); // Экзамены преподавателя.
-        List<ExamStudent> examResults = examService.getExamResultsForStudent(student); // Результаты студента.
+        List<ExamStudent> examResults = examService.getExamResultsForStudent(student);
 
-        model.addAttribute("student", student); // Добавляем данные в модель.
+        model.addAttribute("student", student);
         model.addAttribute("examResults", examResults);
-        return "teacher/student-details-modal"; // Возвращает модальное окно с деталями студента.
+        return "teacher/student-details-modal";
     }
 }

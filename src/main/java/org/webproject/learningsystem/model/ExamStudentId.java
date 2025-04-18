@@ -10,14 +10,14 @@ import java.util.Objects;
 
 @Getter
 @Setter
-@Embeddable // Встраиваемый класс, который используется как составной первичный ключ.
+@Embeddable
 public class ExamStudentId implements java.io.Serializable {
     private static final long serialVersionUID = -7368348421767221796L;
 
-    @Column(name = "exam_id", nullable = false) // ID экзамена.
+    @Column(name = "exam_id", nullable = false)
     private Long examId;
 
-    @Column(name = "student_id", nullable = false) // ID студента.
+    @Column(name = "student_id", nullable = false)
     private Long studentId;
 
     @Override
@@ -31,6 +31,6 @@ public class ExamStudentId implements java.io.Serializable {
 
     @Override
     public int hashCode() {
-        return Objects.hash(studentId, examId); // Хэш-функция для корректной работы equals.
+        return Objects.hash(studentId, examId);
     }
 }

@@ -5,9 +5,6 @@ import org.webproject.learningsystem.model.User;
 import org.webproject.learningsystem.model.User.Role;
 
 public interface UserRepository extends JpaRepository<User, Long> {
-    // Метод для поиска пользователя по email.
     User findByEmail(String email);
-
-    // Метод для поиска пользователей по роли (например, TEACHER или STUDENT).
     User findByRole(Role role);
 }

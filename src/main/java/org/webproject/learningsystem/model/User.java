@@ -6,35 +6,35 @@ import lombok.Data;
 import java.util.Date;
 
 @Entity
-@Table(name = "users") // Таблица для пользователей системы.
-@Data // Генерирует геттеры, сеттеры, equals, hashCode и toString методы [[1]].
+@Table(name = "users")
+@Data
 @JsonIgnoreProperties({"hibernateLazyInitializer", "handler"})
 public class User {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // Автоматическая генерация ID.
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false, unique = true) // Email должен быть уникальным.
+    @Column(nullable = false, unique = true)
     private String email;
 
-    @Column(nullable = false) // Пароль пользователя.
+    @Column(nullable = false)
     private String password;
 
-    @Column(name = "first_name", nullable = false) // Имя пользователя.
+    @Column(name = "first_name", nullable = false)
     private String firstName;
 
-    @Column(name = "last_name", nullable = false) // Фамилия пользователя.
+    @Column(name = "last_name", nullable = false)
     private String lastName;
 
-    @Enumerated(EnumType.STRING) // Перечисление для роли пользователя (TEACHER или STUDENT).
+    @Enumerated(EnumType.STRING)
     @Column(nullable = false)
     private Role role;
 
     @Column(name = "created_at")
-    @Temporal(TemporalType.TIMESTAMP) // Хранение даты и времени создания пользователя.
-    private Date createdAt = new Date(); // Устанавливается автоматически при создании объекта.
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date createdAt = new Date();
 
     public enum Role {
-        TEACHER, STUDENT // Возможные роли пользователя.
+        TEACHER, STUDENT
     }
 }

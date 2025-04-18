@@ -12,30 +12,30 @@ import java.time.Instant;
 @Getter
 @Setter
 @Entity
-@Table(name = "exam_students") // Таблица для связи экзаменов и студентов.
+@Table(name = "exam_students")
 public class ExamStudent {
-    @EmbeddedId // Первичный ключ, состоящий из двух полей (examId и studentId).
+    @EmbeddedId
     private ExamStudentId id;
 
-    @MapsId("examId") // Связь с полем examId в составном ключе.
-    @ManyToOne(fetch = FetchType.LAZY, optional = false) // Ленивая загрузка данных.
-    @OnDelete(action = OnDeleteAction.CASCADE) // Каскадное удаление при удалении экзамена.
-    @JoinColumn(name = "exam_id", nullable = false) // Внешний ключ на таблицу экзаменов.
+    @MapsId("examId")
+    @ManyToOne(fetch = FetchType.LAZY, optional = false)
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "exam_id", nullable = false)
     private Exam exam;
 
-    @MapsId("studentId") // Связь с полем studentId в составном ключе.
+    @MapsId("studentId")
     @ManyToOne(fetch = FetchType.LAZY, optional = false)
-    @OnDelete(action = OnDeleteAction.CASCADE) // Каскадное удаление при удалении студента.
-    @JoinColumn(name = "student_id", nullable = false) // Внешний ключ на таблицу пользователей.
+    @OnDelete(action = OnDeleteAction.CASCADE)
+    @JoinColumn(name = "student_id", nullable = false)
     private User student;
 
-    @ColumnDefault("CURRENT_TIMESTAMP") // Значение по умолчанию — текущая временная метка.
+    @ColumnDefault("CURRENT_TIMESTAMP")
     @Column(name = "enrolled_at")
-    private Instant enrolledAt; // Время записи студента на экзамен.
+    private Instant enrolledAt;
 
     @Column(name = "completed_at")
-    private Instant completedAt; // Время завершения экзамена.
+    private Instant completedAt;
 
     @Column(name = "score")
-    private Integer score; // Результат экзамена (баллы).
+    private Integer score;
 }

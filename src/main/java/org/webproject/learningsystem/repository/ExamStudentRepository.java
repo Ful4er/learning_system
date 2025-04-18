@@ -9,9 +9,6 @@ import org.webproject.learningsystem.model.User;
 import java.util.List;
 
 public interface ExamStudentRepository extends JpaRepository<ExamStudent, ExamStudentId> {
-    // Метод для поиска всех записей о студентах, связанных с конкретным студентом.
     List<ExamStudent> findByStudent(User student);
-
-    // Метод для поиска всех записей о студентах, связанных с конкретным экзаменом.
     List<ExamStudent> findByExam(Exam exam);
 }
