@@ -38,7 +38,6 @@
       </div>
 
       <div class="students-grid">
-        <!-- Карточки студентов -->
         <div class="student-card" th:each="student : ${students}" th:onclick="|showStudentDetails(${student.id})|">
           <div class="student-avatar-grid" style="align-content: center;">
             <div class="student-avatar">
@@ -56,7 +55,6 @@
   </div>
 </main>
 
-<!-- Детали студентов -->
 <div id="studentModal" class="modal" style="display:none;">
   <div class="modal-content">
     <span class="close" onclick="closeStudentModal()">&times;</span>

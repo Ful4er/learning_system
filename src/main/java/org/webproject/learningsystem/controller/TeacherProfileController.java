@@ -7,7 +7,6 @@ import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.webproject.learningsystem.model.User;
 import org.webproject.learningsystem.service.ExamService;
-import org.webproject.learningsystem.service.UserService;
 
 @Controller
 @RequestMapping("/teacher")

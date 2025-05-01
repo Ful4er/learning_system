@@ -1,4 +1,3 @@
-// Обработчик для модального окна добавления экзамена
 document.getElementById('addExamBtn').onclick = function() {
     document.getElementById('examModal').style.display = 'block';
 }
@@ -7,7 +6,6 @@ document.querySelector('#examModal .close').onclick = function() {
     document.getElementById('examModal').style.display = 'none';
 }
 
-// Обработчики для модального окна деталей экзамена
 function closeExamDetailsModal() {
     document.getElementById('examDetailsModal').style.display = 'none';
 }
@@ -21,7 +19,6 @@ window.onclick = function(event) {
     }
 }
 
-// Обработчик кликов по карточкам экзаменов
 document.querySelectorAll('.exam-link').forEach(link => {
     link.addEventListener('click', function(e) {
         e.preventDefault();
@@ -30,8 +27,8 @@ document.querySelectorAll('.exam-link').forEach(link => {
     });
 });
 
-// Функция для загрузки деталей экзамена
 function fetchExamDetails(examId) {
+    document.getElementById('examDetailsModal').dataset.examId = examId;
     fetch(`/teacher/exams/${examId}/details`)
         .then(response => {
             if (!response.ok) {
@@ -48,8 +45,49 @@ function fetchExamDetails(examId) {
             alert('Failed to load exam details');
         });
 }
+function addStudentToExam() {
+    const emailInput = document.getElementById('studentEmail');
+    const email = emailInput.value.trim();
+    const examId = document.querySelector('#examDetailsModal').dataset.examId;
+    const messageDiv = document.getElementById('addStudentMessage');
 
-// Функция для отображения деталей экзамена
+    if (!email) {
+        showMessage('Please enter student email', 'error');
+        return;
+    }
+
+    fetch(`/teacher/exams/${examId}/add-student`, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email: email })
+    })
+        .then(response => {
+            if (response.ok) return;
+            return response.text().then(text => {
+                throw new Error(text || 'Failed to add student')
+            });
+        })
+        .then(() => {
+            showMessage('Student added successfully', 'success');
+            emailInput.value = '';
+            fetchExamDetails(examId);
+        })
+        .catch(error => {
+            showMessage(error.message, 'error');
+        });
+}
+
+function showMessage(text, type) {
+    const messageDiv = document.getElementById('addStudentMessage');
+    messageDiv.textContent = text;
+    messageDiv.className = `message ${type}`;
+    setTimeout(() => {
+        messageDiv.textContent = '';
+        messageDiv.className = 'message';
+    }, 5000);
+}
 function displayExamDetails(data) {
     const exam = data.exam;
     const studentResults = data.studentResults;
@@ -66,7 +104,7 @@ function displayExamDetails(data) {
     studentsList.innerHTML = '';
 
     if (studentResults.length === 0) {
-        studentsList.innerHTML = '<tr><td colspan="4">No students enrolled yet</td></tr>';
+        studentsList.innerHTML = '<tr><td colspan="5">No students enrolled yet</td></tr>';
     } else {
         studentResults.forEach(student => {
             const initials = student.studentName.split(' ')
@@ -95,8 +133,37 @@ function displayExamDetails(data) {
                 <td>${status}</td>
                 <td>${score}</td>
                 <td>${completedDate}</td>
+                <td>
+                    <button class="delete-btn" data-student-id="${student.studentId}">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                            <path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+                        </svg>
+                    </button>
+                </td>
             `;
+
+            row.querySelector('.delete-btn').addEventListener('click', () => {
+                deleteStudent(exam.id, student.studentId);
+            });
+
             studentsList.appendChild(row);
         });
     }
+}
+
+function deleteStudent(examId, studentId) {
+    if (!confirm('Are you sure you want to remove this student?')) return;
+
+    fetch(`/teacher/exams/${examId}/students/${studentId}`, {
+        method: 'DELETE'
+    })
+        .then(response => {
+            if (!response.ok) {
+                return response.text().then(text => { throw new Error(text) });
+            }
+            fetchExamDetails(examId);
+        })
+        .catch(error => {
+            showMessage(error.message || 'Failed to delete student', 'error');
+        });
 }

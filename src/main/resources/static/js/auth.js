@@ -28,15 +28,12 @@ document.addEventListener('DOMContentLoaded', function() {
         setActiveForm(formType) {
             const isLogin = formType === 'login';
 
-            // Update forms visibility
             this.loginForm.classList.toggle('hidden', !isLogin);
             this.registerForm.classList.toggle('hidden', isLogin);
 
-            // Update toggle buttons
             this.loginToggle.classList.toggle('active', isLogin);
             this.registerToggle.classList.toggle('active', !isLogin);
 
-            // Update texts
             this.subtitle.textContent = isLogin ? 'Sign in to your account' : 'Create a new account';
             this.footerText.textContent = isLogin ? "Don't have an account?" : "Already have an account?";
             this.switchLink.textContent = isLogin ? "Register" : "Sign in";

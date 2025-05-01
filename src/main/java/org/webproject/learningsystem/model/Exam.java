@@ -26,7 +26,7 @@ public class Exam {
     @JoinColumn(name = "teacher_id", nullable = false)
     private User teacher;
 
-    @ManyToMany
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     @JoinTable(
             name = "exam_students",
             joinColumns = @JoinColumn(name = "exam_id"),

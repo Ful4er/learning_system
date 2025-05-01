@@ -11,4 +11,6 @@ import java.util.List;
 public interface ExamStudentRepository extends JpaRepository<ExamStudent, ExamStudentId> {
     List<ExamStudent> findByStudent(User student);
     List<ExamStudent> findByExam(Exam exam);
+    boolean existsByExamAndStudent(Exam exam, User student);
+    void deleteByExamAndStudent(Exam exam, User student);
 }

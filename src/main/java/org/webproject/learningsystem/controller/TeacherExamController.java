@@ -1,10 +1,13 @@
 package org.webproject.learningsystem.controller;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.webproject.learningsystem.dto.ExamWithResults;
 import org.webproject.learningsystem.model.Exam;
 import org.webproject.learningsystem.model.ExamStudent;
 import org.webproject.learningsystem.model.User;
 import org.webproject.learningsystem.repository.ExamStudentRepository;
+import org.webproject.learningsystem.repository.UserRepository;
 import org.webproject.learningsystem.service.ExamService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
@@ -12,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 import java.util.stream.Collectors;
 
 @Controller
@@ -20,7 +24,9 @@ public class TeacherExamController {
     private final ExamService examService;
     private ExamStudentRepository examStudentRepository;
 
-    public TeacherExamController(ExamService examService, ExamStudentRepository examStudentRepository) {
+    public TeacherExamController(ExamService examService,
+                                 ExamStudentRepository examStudentRepository,
+                                 UserRepository userRepository) { // Добавляем репозиторий
         this.examService = examService;
         this.examStudentRepository = examStudentRepository;
     }
@@ -89,5 +95,49 @@ public class TeacherExamController {
         }).collect(Collectors.toList()));
 
         return result;
+    }
+    @PostMapping("/{examId}/add-student")
+    @ResponseBody
+    public ResponseEntity<?> addStudentToExam(
+            @PathVariable Long examId,
+            @RequestBody Map<String, String> request,
+            HttpSession session
+    ) {
+
+        try {
+            User teacher = (User) session.getAttribute("user");
+            if (teacher == null || teacher.getRole() != User.Role.TEACHER) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+            String studentEmail = request.get("email");
+            if (studentEmail == null || studentEmail.isEmpty()) {
+                return ResponseEntity.badRequest().body("Email is required");
+            }
+            examService.addStudentToExam(examId, studentEmail, teacher);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
+                    .body("Error: " + e.getMessage());
+        }
+    }
+    @DeleteMapping("/{examId}/students/{studentId}")
+    @ResponseBody
+    public ResponseEntity<?> removeStudentFromExam(
+            @PathVariable Long examId,
+            @PathVariable Long studentId,
+            HttpSession session
+    ) {
+        try {
+            User teacher = (User) session.getAttribute("user");
+            if (teacher == null || teacher.getRole() != User.Role.TEACHER) {
+                return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+            }
+
+            examService.removeStudentFromExam(examId, studentId, teacher);
+            return ResponseEntity.ok().build();
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.badRequest().body(e.getMessage());
+        }
     }
 }

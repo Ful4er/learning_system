@@ -7,5 +7,4 @@ import java.util.List;
 
 public interface ExamRepository extends JpaRepository<Exam, Long> {
     List<Exam> findByTeacher(User teacher);
-    List<Exam> findByStudentsContaining(User student);
 }

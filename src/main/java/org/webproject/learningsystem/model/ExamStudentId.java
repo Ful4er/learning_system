@@ -2,15 +2,19 @@ package org.webproject.learningsystem.model;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Embeddable;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.Hibernate;
 
 import java.util.Objects;
 
+@Embeddable
 @Getter
 @Setter
-@Embeddable
+@NoArgsConstructor
+@AllArgsConstructor
 public class ExamStudentId implements java.io.Serializable {
     private static final long serialVersionUID = -7368348421767221796L;
 
