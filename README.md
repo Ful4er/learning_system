@@ -42,7 +42,6 @@
 ### Backend:
 - Java 21
 - Spring Boot 3.2.0
-- Spring Security
 - Spring Data JPA
 
 ### Frontend:
